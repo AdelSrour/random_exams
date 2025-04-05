@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Network - 200 MCQs</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .question { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+    .options button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+    .options button.selected {
+      background-color: #cce5ff;
+    }
+    .options button.correct {
+      background-color: #28a745;
+      color: white;
+    }
+    .options button.incorrect {
+      background-color: #dc3545;
+      color: white;
+    }
+    .submit-btn {
+      margin-top: 30px;
+      padding: 15px 25px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Network - 200 MCQs</h1>
+  <form id="quizForm">
+    <div id="questionsContainer"></div>
+    <button type="button" class="submit-btn" onclick="submitAnswers()">Submit Answers</button>
+  </form>
+
+  <script>
+    const questions = [
+  {'q': 'What is a computer network?', 'options': ['A single computer', 'Group of interconnected computers/peripherals', 'A type of software', 'A storage device'], 'correct': 1},
+{'q': 'Which of these is NOT a computer type?', 'options': ['Desktop', 'Laptop', 'Router', 'Tablet'], 'correct': 2},
+{'q': 'What is the primary function of transmission media?', 'options': ['Store data', 'Connect network devices', 'Run applications', 'Encrypt messages'], 'correct': 1},
+{'q': 'Which wired cable uses light pulses for data transfer?', 'options': ['Coaxial', 'Twisted Pair', 'Fiber Optic', 'USB'], 'correct': 2},
+{'q': 'What is the main advantage of wireless media?', 'options': ['Higher speed than fiber optics', 'Mobility', 'Lower cost than copper', 'No need for routers'], 'correct': 1},
+{'q': 'Which topology connects all devices to a central hub/switch?', 'options': ['Bus', 'Ring', 'Star', 'Mesh'], 'correct': 2},
+{'q': 'What is a key disadvantage of bus topology?', 'options': ['Complex design', 'Single point of failure', 'Sniffing vulnerability', 'High cost'], 'correct': 2},
+{'q': 'In ring topology, how do messages travel?', 'options': ['Randomly', 'Bidirectional', 'Unidirectional', 'Only to the central node'], 'correct': 2},
+{'q': 'Which topology offers the highest redundancy?', 'options': ['Star', 'Mesh', 'Bus', 'Ring'], 'correct': 1},
+{'q': 'What device is central to star topology?', 'options': ['Router', 'Hub/Switch', 'NIC', 'Repeater'], 'correct': 1},
+{'q': 'Which network category covers a small geographical area?', 'options': ['WAN', 'LAN', 'MAN', 'PAN'], 'correct': 1},
+{'q': 'What is a characteristic of WANs?', 'options': ['High speed', 'Managed by ISPs', 'Limited to one building', 'Uses only wireless media'], 'correct': 1},
+{'q': 'Which transmission mode allows two-way communication but not simultaneously?', 'options': ['Simplex', 'Half-Duplex', 'Full-Duplex', 'Broadband'], 'correct': 1},
+{'q': 'What does NIC stand for?', 'options': ['Network Interface Card', 'Network Internet Connection', 'Node Identification Code', 'Network Interrupt Controller'], 'correct': 0},
+{'q': 'Which device operates at Layer 2 of the OSI model?', 'options': ['Router', 'Hub', 'Switch', 'Modem'], 'correct': 2},
+{'q': 'What is the main function of a router?', 'options': ['Filter frames', 'Connect devices in a LAN', 'Route packets between networks', 'Amplify signals'], 'correct': 2},
+{'q': 'Which protocol resolves domain names to IP addresses?', 'options': ['HTTP', 'FTP', 'DNS', 'SMTP'], 'correct': 2},
+{'q': 'What port does HTTP use?', 'options': ['21', '25', '53', '80'], 'correct': 3},
+{'q': 'Which layer of the OSI model handles encryption?', 'options': ['Application', 'Presentation', 'Session', 'Transport'], 'correct': 1},
+{'q': 'What is the purpose of the transport layer?', 'options': ['Routing packets', 'Segmenting data', 'Physical cabling', 'Error detection in frames'], 'correct': 1},
+{'q': 'Which TCP/IP layer merges OSI’s top 3 layers?', 'options': ['Network', 'Transport', 'Application', 'Physical'], 'correct': 2},
+{'q': 'What is a socket address composed of?', 'options': ['IP + MAC', 'IP + Port', 'MAC + Port', 'IP + Subnet Mask'], 'correct': 1},
+{'q': 'Which protocol is connectionless?', 'options': ['TCP', 'UDP', 'FTP', 'HTTP'], 'correct': 1},
+{'q': 'What does CSMA/CD stand for?', 'options': ['Collision Sensing Method/Data', 'Carrier Sense Multiple Access/Collision Detection', 'Centralized Switching Mode/Data', 'Cyclic Signal Management/Detection'], 'correct': 1},
+{'q': 'Which wireless standard operates at 5GHz?', 'options': ['802.11b', '802.11g', '802.11n', '802.11a'], 'correct': 3},
+{'q': 'What is the purpose of SSID?', 'options': ['Encrypt data', 'Identify wireless networks', 'Route packets', 'Assign IP addresses'], 'correct': 1},
+{'q': 'Which security goal ensures data is not altered?', 'options': ['Confidentiality', 'Integrity', 'Availability', 'Authentication'], 'correct': 1},
+{'q': 'What is a vulnerability?', 'options': ['A threat actor', 'A security patch', 'A weakness in safeguards', 'A type of firewall'], 'correct': 2},
+{'q': 'Which device filters traffic between networks?', 'options': ['Switch', 'Hub', 'Firewall', 'Access Point'], 'correct': 2},
+{'q': 'What is NAT?', 'options': ['Network Address Translation', 'Node Authentication Tool', 'Network Analysis Technique', 'Node Addressing Table'], 'correct': 0},
+{'q': 'Which tool is used for port scanning?', 'options': ['Wireshark', 'Nmap', 'Ping', 'ARP'], 'correct': 1},
+{'q': 'What does a honeypot do?', 'options': ['Blocks all traffic', 'Simulates vulnerable systems', 'Encrypts data', 'Acts as a router'], 'correct': 1},
+{'q': 'Which IEEE standard governs Wi-Fi?', 'options': ['802.3', '802.11', '802.15', '802.1Q'], 'correct': 1},
+{'q': 'What is the purpose of DHCP?', 'options': ['Resolve domain names', 'Assign IP addresses dynamically', 'Encrypt emails', 'Filter malware'], 'correct': 1},
+{'q': 'Which layer adds physical addresses to frames?', 'options': ['Network', 'Transport', 'Data Link', 'Physical'], 'correct': 2},
+{'q': 'What is the main drawback of wireless networks?', 'options': ['High cost', 'Limited coverage', 'Complex cabling', 'Slow speeds'], 'correct': 1},
+{'q': 'Which protocol is used for email transmission?', 'options': ['FTP', 'SMTP', 'HTTP', 'DNS'], 'correct': 1},
+{'q': 'What does VLAN stand for?', 'options': ['Virtual Local Area Network', 'Verified LAN', 'Volatile Link Access Node', 'Virtual Link Address Network'], 'correct': 0},
+{'q': 'Which OSI layer manages sessions?', 'options': ['Application', 'Session', 'Transport', 'Network'], 'correct': 1},
+{'q': 'What is the purpose of ARP?', 'options': ['Resolve IP to MAC', 'Route packets', 'Encrypt data', 'Assign ports'], 'correct': 0},
+{'q': 'Which wireless technology is used for PANs?', 'options': ['Wi-Fi', 'Bluetooth', 'WiMAX', 'GSM'], 'correct': 1},
+{'q': 'What is the default port for HTTPS?', 'options': ['80', '443', '21', '25'], 'correct': 1},
+{'q': 'Which network type uses peer-to-peer administration?', 'options': ['Client/Server', 'LAN', 'WAN', 'P2P'], 'correct': 3},
+{'q': 'What is the role of the presentation layer?', 'options': ['Data encryption', 'Packet routing', 'Physical addressing', 'Session management'], 'correct': 0},
+{'q': 'Which device extends wireless coverage?', 'options': ['Router', 'Access Point', 'Switch', 'Modem'], 'correct': 1},
+{'q': 'What is a key benefit of fiber optic cables?', 'options': ['Low cost', 'Immunity to EMI', 'Easy installation', 'Short-range use'], 'correct': 1},
+{'q': 'Which protocol is used for real-time video streaming?', 'options': ['TCP', 'UDP', 'FTP', 'HTTP'], 'correct': 1},
+{'q': 'What does MAC address stand for?', 'options': ['Media Access Control', 'Managed Address Code', 'Multi-Address Carrier', 'Memory Access Channel'], 'correct': 0},
+{'q': 'Which firewall type inspects packet groups?', 'options': ['Packet Filter', 'Proxy', 'Stateful', 'Personal'], 'correct': 2},
+{'q': 'What is the purpose of a subnet mask?', 'options': ['Encrypt data', 'Identify network portions of IP', 'Assign ports', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which tool captures network traffic?', 'options': ['Ping', 'Traceroute', 'Wireshark', 'Netstat'], 'correct': 2},
+{'q': 'What is the main security risk of BYOD?', 'options': ['High cost', 'Unauthorized access', 'Slow speeds', 'Complex setup'], 'correct': 1},
+{'q': 'Which layer handles logical addressing?', 'options': ['Physical', 'Data Link', 'Network', 'Transport'], 'correct': 2},
+{'q': 'What is the purpose of RTS/CTS in Wi-Fi?', 'options': ['Encrypt data', 'Avoid collisions', 'Assign IPs', 'Boost signal'], 'correct': 1},
+{'q': 'Which network service centralizes files?', 'options': ['DNS', 'FTP', 'DHCP', 'SMTP'], 'correct': 1},
+{'q': 'What is the primary goal of a honeynet?', 'options': ['Block attacks', 'Monitor intruders', 'Speed up networks', 'Replace firewalls'], 'correct': 1},
+{'q': 'Which UTP category supports Gigabit Ethernet?', 'options': ['Cat 3', 'Cat 5', 'Cat 6', 'Cat 7'], 'correct': 2},
+{'q': 'What does PoE stand for?', 'options': ['Packet over Ethernet', 'Power over Ethernet', 'Port over Ethernet', 'Protocol over Ethernet'], 'correct': 1},
+{'q': 'Which protocol dynamically assigns IPs?', 'options': ['DNS', 'FTP', 'DHCP', 'HTTP'], 'correct': 2},
+{'q': 'What is the purpose of the session layer?', 'options': ['Data compression', 'Connection establishment/termination', 'Packet routing', 'Physical signaling'], 'correct': 1},
+{'q': 'Which device operates at Layer 1?', 'options': ['Switch', 'Hub', 'Router', 'Firewall'], 'correct': 1},
+{'q': 'What is the main function of a proxy firewall?', 'options': ['Filter packets', 'Inspect application-layer traffic', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which wireless standard has the longest range?', 'options': ['802.11a', '802.11b', '802.11g', '802.11n'], 'correct': 3},
+{'q': 'What is the purpose of the physical layer?', 'options': ['Frame assembly', 'Bit transmission over media', 'Logical addressing', 'Error recovery'], 'correct': 1},
+{'q': 'Which network type uses ISDN?', 'options': ['LAN', 'WAN', 'PAN', 'VLAN'], 'correct': 1},
+{'q': 'What is a key benefit of VLANs?', 'options': ['Reduce cost', 'Segment networks logically', 'Increase wireless range', 'Replace routers'], 'correct': 1},
+{'q': 'Which protocol is used for VoIP?', 'options': ['FTP', 'SMTP', 'RTP', 'HTTP'], 'correct': 2},
+{'q': 'What does TTL stand for in networking?', 'options': ['Time to Live', 'Total Transmission Length', 'Transport Layer', 'Terminal Type Logic'], 'correct': 0},
+{'q': 'Which security mechanism prevents replay attacks?', 'options': ['Encryption', 'Sequence numbers', 'Firewalls', 'NAT'], 'correct': 1},
+{'q': 'What is the purpose of the data link layer?', 'options': ['Routing', 'Reliable hop-to-hop delivery', 'Session management', 'Data compression'], 'correct': 1},
+{'q': 'Which Wi-Fi security protocol is weakest?', 'options': ['WEP', 'WPA', 'WPA2', 'AES'], 'correct': 0},
+{'q': 'What is the main function of BNC connectors?', 'options': ['Fiber optics', 'Coaxial cables', 'Twisted pair', 'USB'], 'correct': 1},
+{'q': 'Which protocol is used for remote login?', 'options': ['FTP', 'SSH', 'SMTP', 'DNS'], 'correct': 1},
+{'q': 'What is the purpose of the network layer?', 'options': ['Physical addressing', 'Logical addressing/routing', 'Session control', 'Data presentation'], 'correct': 1},
+{'q': 'Which device separates broadcast domains?', 'options': ['Hub', 'Switch', 'Router', 'Bridge'], 'correct': 2},
+{'q': 'What is the primary use of ICMP?', 'options': ['Email transmission', 'Error reporting', 'File transfer', 'Web browsing'], 'correct': 1},
+{'q': 'Which wireless technology uses 2.4GHz and 5GHz bands?', 'options': ['Bluetooth', 'Wi-Fi', 'Zigbee', 'NFC'], 'correct': 1},
+{'q': 'What is the purpose of a default gateway?', 'options': ['Assign IPs', 'Route traffic outside the local network', 'Resolve DNS', 'Filter malware'], 'correct': 1},
+{'q': 'Which layer ensures end-to-end reliability?', 'options': ['Network', 'Transport', 'Data Link', 'Physical'], 'correct': 1},
+{'q': 'What is the main advantage of full-duplex communication?', 'options': ['Simultaneous two-way transmission', 'Lower cost', 'Longer range', 'No need for addressing'], 'correct': 0},
+{'q': 'Which protocol is used for dynamic routing?', 'options': ['HTTP', 'OSPF', 'FTP', 'SMTP'], 'correct': 1},
+{'q': 'What is the purpose of a crimper tool?', 'options': ['Terminate fiber optics', 'Connect RJ45 connectors to UTP', 'Configure routers', 'Test cables'], 'correct': 1},
+{'q': 'Which network service resolves hostnames?', 'options': ['DHCP', 'DNS', 'FTP', 'SMTP'], 'correct': 1},
+{'q': 'What is the main function of a repeater?', 'options': ['Filter traffic', 'Amplify signals', 'Route packets', 'Assign IPs'], 'correct': 1},
+{'q': 'Which security tool detects intrusions?', 'options': ['Firewall', 'IDS', 'NAT', 'DHCP'], 'correct': 1},
+{'q': 'What is the purpose of the SYN flag in TCP?', 'options': ['Terminate connection', 'Initiate connection', 'Acknowledge data', 'Request retransmission'], 'correct': 1},
+{'q': 'Which Wi-Fi encryption standard is strongest?', 'options': ['WEP', 'WPA', 'WPA2', 'TKIP'], 'correct': 2},
+{'q': 'What is the primary use of a protocol analyzer?', 'options': ['Assign IPs', 'Capture/inspect network traffic', 'Boost signals', 'Configure routers'], 'correct': 1},
+{'q': 'Which layer handles flow control?', 'options': ['Physical', 'Data Link', 'Transport', 'Application'], 'correct': 2},
+{'q': 'What is the purpose of the LLC sublayer?', 'options': ['Physical addressing', 'Error control', 'Interface with network layer', 'Signal transmission'], 'correct': 2},
+{'q': 'Which network device operates at Layer 3?', 'options': ['Hub', 'Switch', 'Router', 'Bridge'], 'correct': 2},
+{'q': 'What is the purpose of a routing table?', 'options': ['Store MAC addresses', 'List paths to destination networks', 'Encrypt data', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for time synchronization?', 'options': ['NTP', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the main function of a modem?', 'options': ['Route packets', 'Convert digital to analog signals', 'Filter traffic', 'Assign IPs'], 'correct': 1},
+{'q': 'Which security concept ensures authorized access?', 'options': ['Confidentiality', 'Integrity', 'Availability', 'Authentication'], 'correct': 3},
+{'q': 'What is the purpose of a subnet?', 'options': ['Divide networks into smaller segments', 'Encrypt traffic', 'Boost Wi-Fi signals', 'Replace routers'], 'correct': 0},
+{'q': 'Which tool tests network connectivity?', 'options': ['Ping', 'ARP', 'Nmap', 'Wireshark'], 'correct': 0},
+{'q': 'What is the primary role of an access point?', 'options': ['Route packets', 'Connect wireless devices to wired networks', 'Assign IPs', 'Filter malware'], 'correct': 1},
+{'q': 'Which protocol is used for secure web browsing?', 'options': ['HTTP', 'HTTPS', 'FTP', 'SMTP'], 'correct': 1},
+{'q': 'What is the purpose of the FCS field in frames?', 'options': ['Logical addressing', 'Error detection', 'Session control', 'Data compression'], 'correct': 1},
+{'q': 'Which network topology is easiest to troubleshoot?', 'options': ['Bus', 'Ring', 'Star', 'Mesh'], 'correct': 2},
+{'q': 'What is the purpose of a DMZ?', 'options': ['Encrypt data', 'Isolate public-facing servers', 'Assign IPs', 'Boost signals'], 'correct': 1},
+{'q': 'Which protocol is used for file sharing?', 'options': ['HTTP', 'FTP', 'SMTP', 'DNS'], 'correct': 1},
+{'q': 'What is the main advantage of IPv6?', 'options': ['Smaller addresses', 'Backward compatibility', 'Larger address space', 'Simpler headers'], 'correct': 2},
+{'q': 'Which device connects different VLANs?', 'options': ['Hub', 'Switch', 'Router', 'Bridge'], 'correct': 2},
+{'q': 'What is the purpose of QoS?', 'options': ['Prioritize traffic', 'Encrypt data', 'Resolve DNS', 'Assign IPs'], 'correct': 0},
+{'q': 'Which security measure prevents MAC spoofing?', 'options': ['Firewalls', 'Port security', 'NAT', 'VLANs'], 'correct': 1},
+{'q': 'What is the primary function of a proxy server?', 'options': ['Route packets', 'Filter/forward application requests', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network management?', 'options': ['SNMP', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the ACK flag in TCP?', 'options': ['Initiate connection', 'Acknowledge received data', 'Terminate connection', 'Request retransmission'], 'correct': 1},
+{'q': 'Which Wi-Fi standard offers the highest speed?', 'options': ['802.11a', '802.11ac', '802.11g', '802.11n'], 'correct': 1},
+{'q': 'What is the purpose of a loopback address?', 'options': ['Test network interfaces', 'Route internet traffic', 'Assign to servers', 'Replace gateways'], 'correct': 0},
+{'q': 'Which security protocol encrypts web traffic?', 'options': ['HTTP', 'HTTPS', 'FTP', 'SMTP'], 'correct': 1},
+{'q': 'What is the primary use of a protocol suite?', 'options': ['Define communication rules', 'Assign IPs', 'Boost signals', 'Replace hardware'], 'correct': 0},
+{'q': 'Which device extends network segments?', 'options': ['Hub', 'Repeater', 'Router', 'Firewall'], 'correct': 1},
+{'q': 'What is the purpose of the RST flag in TCP?', 'options': ['Initiate connection', 'Terminate connection abruptly', 'Acknowledge data', 'Request retransmission'], 'correct': 1},
+{'q': 'Which network service provides email retrieval?', 'options': ['SMTP', 'POP3', 'FTP', 'HTTP'], 'correct': 1},
+{'q': 'What is the primary function of a gateway?', 'options': ['Filter traffic', 'Connect dissimilar networks', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network diagnostics?', 'options': ['ICMP', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of a frame in networking?', 'options': ['Route packets', 'Encapsulate data for transmission', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security measure hides internal IPs?', 'options': ['Firewall', 'NAT', 'VLAN', 'DHCP'], 'correct': 1},
+{'q': 'What is the primary role of a DNS server?', 'options': ['Assign IPs', 'Resolve domain names', 'Filter traffic', 'Encrypt data'], 'correct': 1},
+{'q': 'Which protocol is used for secure file transfer?', 'options': ['FTP', 'SFTP', 'HTTP', 'SMTP'], 'correct': 1},
+{'q': 'What is the purpose of the FIN flag in TCP?', 'options': ['Initiate connection', 'Gracefully terminate connection', 'Acknowledge data', 'Request retransmission'], 'correct': 1},
+{'q': 'Which network device operates at all OSI layers?', 'options': ['Hub', 'Switch', 'Router', 'Gateway'], 'correct': 3},
+{'q': 'What is the primary function of a bridge?', 'options': ['Route packets', 'Connect LAN segments', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security tool blocks unauthorized access?', 'options': ['Firewall', 'IDS', 'NAT', 'DHCP'], 'correct': 0},
+{'q': 'What is the purpose of the PSH flag in TCP?', 'options': ['Initiate connection', 'Request immediate data delivery', 'Acknowledge data', 'Terminate connection'], 'correct': 1},
+{'q': 'Which protocol is used for automated email retrieval?', 'options': ['SMTP', 'IMAP', 'FTP', 'HTTP'], 'correct': 1},
+{'q': 'What is the primary use of a packet sniffer?', 'options': ['Assign IPs', 'Capture/analyze network traffic', 'Boost signals', 'Configure routers'], 'correct': 1},
+{'q': 'Which security concept ensures systems are accessible?', 'options': ['Confidentiality', 'Integrity', 'Availability', 'Authentication'], 'correct': 2},
+{'q': 'What is the purpose of the URG flag in TCP?', 'options': ['Indicate priority data', 'Initiate connection', 'Acknowledge data', 'Terminate connection'], 'correct': 0},
+{'q': 'Which network service provides centralized authentication?', 'options': ['DNS', 'RADIUS', 'FTP', 'HTTP'], 'correct': 1},
+{'q': 'What is the primary function of a load balancer?', 'options': ['Distribute network traffic', 'Assign IPs', 'Encrypt data', 'Resolve DNS'], 'correct': 0},
+{'q': 'Which protocol is used for virtual terminal access?', 'options': ['FTP', 'Telnet', 'HTTP', 'SMTP'], 'correct': 1},
+{'q': 'What is the purpose of the CIR register?', 'options': ['Hold current instruction', 'Store memory addresses', 'Manage interrupts', 'Control buses'], 'correct': 0},
+{'q': 'Which security measure prevents unauthorized changes?', 'options': ['Confidentiality', 'Integrity', 'Availability', 'Authentication'], 'correct': 1},
+{'q': 'What is the primary role of a proxy?', 'options': ['Route packets', 'Act as intermediary for requests', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network time synchronization?', 'options': ['NTP', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the BSSID in Wi-Fi?', 'options': ['Encrypt data', 'Identify access points', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security tool simulates attacks?', 'options': ['Firewall', 'IDS', 'Honeypot', 'NAT'], 'correct': 2},
+{'q': 'What is the primary function of a VPN?', 'options': ['Filter traffic', 'Create secure remote connections', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for dynamic IP assignment?', 'options': ['DNS', 'DHCP', 'FTP', 'HTTP'], 'correct': 1},
+{'q': 'What is the purpose of the ESSID in Wi-Fi?', 'options': ['Identify a network group', 'Encrypt data', 'Assign IPs', 'Resolve DNS'], 'correct': 0},
+{'q': 'Which security measure verifies user identity?', 'options': ['Confidentiality', 'Integrity', 'Availability', 'Authentication'], 'correct': 3},
+{'q': 'What is the primary role of a DNS resolver?', 'options': ['Store domain records', 'Translate domain names to IPs', 'Assign IPs', 'Filter traffic'], 'correct': 1},
+{'q': 'Which protocol is used for secure shell access?', 'options': ['FTP', 'SSH', 'HTTP', 'SMTP'], 'correct': 1},
+{'q': 'What is the purpose of the beacon frame in Wi-Fi?', 'options': ['Encrypt data', 'Announce network presence', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security tool logs network activity?', 'options': ['Firewall', 'IDS', 'SIEM', 'NAT'], 'correct': 2},
+{'q': 'What is the primary function of a SAN?', 'options': ['Route packets', 'Provide block-level storage', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network discovery?', 'options': ['ARP', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the probe request in Wi-Fi?', 'options': ['Encrypt data', 'Discover nearby networks', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security measure ensures data privacy?', 'options': ['Confidentiality', 'Integrity', 'Availability', 'Authentication'], 'correct': 0},
+{'q': 'What is the primary role of a RADIUS server?', 'options': ['Route packets', 'Centralize authentication', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network file sharing?', 'options': ['NFS', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the association request in Wi-Fi?', 'options': ['Encrypt data', 'Join a network', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security tool detects vulnerabilities?', 'options': ['Firewall', 'IDS', 'Vulnerability scanner', 'NAT'], 'correct': 2},
+{'q': 'What is the primary function of a NAS?', 'options': ['Route packets', 'Provide file-level storage', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network printing?', 'options': ['IPP', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the authentication frame in Wi-Fi?', 'options': ['Encrypt data', 'Verify client identity', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security measure ensures non-repudiation?', 'options': ['Encryption', 'Digital signatures', 'Firewalls', 'NAT'], 'correct': 1},
+{'q': 'What is the primary role of a TACACS+ server?', 'options': ['Route packets', 'Centralize authentication', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network monitoring?', 'options': ['SNMP', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the deauthentication frame in Wi-Fi?', 'options': ['Encrypt data', 'Remove a client', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security tool prevents ARP spoofing?', 'options': ['Firewall', 'ARP inspection', 'NAT', 'VLAN'], 'correct': 1},
+{'q': 'What is the primary function of a SIEM system?', 'options': ['Route packets', 'Analyze security events', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network configuration?', 'options': ['DHCP', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the disassociation frame in Wi-Fi?', 'options': ['Encrypt data', 'Gracefully remove a client', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security measure prevents DDoS attacks?', 'options': ['Firewalls', 'Rate limiting', 'NAT', 'VLANs'], 'correct': 1},
+{'q': 'What is the primary role of a syslog server?', 'options': ['Route packets', 'Centralize logs', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network automation?', 'options': ['NETCONF', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the RSN in Wi-Fi?', 'options': ['Encrypt data', 'Enable robust security', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security tool blocks malicious traffic?', 'options': ['Firewall', 'IDS', 'IPS', 'NAT'], 'correct': 2},
+{'q': 'What is the primary function of a WAF?', 'options': ['Route packets', 'Protect web applications', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network virtualization?', 'options': ['VXLAN', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the PMK in Wi-Fi?', 'options': ['Encrypt data', 'Store pairwise master key', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security measure prevents insider threats?', 'options': ['Firewalls', 'Access controls', 'NAT', 'VLANs'], 'correct': 1},
+{'q': 'What is the primary role of a NAC system?', 'options': ['Route packets', 'Enforce access policies', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network telemetry?', 'options': ['gRPC', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the GTK in Wi-Fi?', 'options': ['Encrypt data', 'Store group temporal key', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security tool analyzes malware?', 'options': ['Firewall', 'IDS', 'Sandbox', 'NAT'], 'correct': 2},
+{'q': 'What is the primary function of a DPI system?', 'options': ['Route packets', 'Inspect application-layer traffic', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network synchronization?', 'options': ['PTP', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the PTK in Wi-Fi?', 'options': ['Encrypt data', 'Store pairwise transient key', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security measure prevents zero-day exploits?', 'options': ['Firewalls', 'Patch management', 'NAT', 'VLANs'], 'correct': 1},
+{'q': 'What is the primary role of a SOAR platform?', 'options': ['Route packets', 'Automate security workflows', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network orchestration?', 'options': ['Ansible', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the MIC in Wi-Fi?', 'options': ['Encrypt data', 'Verify message integrity', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security tool simulates phishing?', 'options': ['Firewall', 'IDS', 'Phishing simulator', 'NAT'], 'correct': 2},
+{'q': 'What is the primary function of a CASB?', 'options': ['Route packets', 'Secure cloud services', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network visualization?', 'options': ['NetFlow', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the EAP in Wi-Fi?', 'options': ['Encrypt data', 'Extensible authentication', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security measure prevents data leaks?', 'options': ['Firewalls', 'DLP', 'NAT', 'VLANs'], 'correct': 1},
+{'q': 'What is the primary role of a UEBA system?', 'options': ['Route packets', 'Detect anomalous behavior', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network segmentation?', 'options': ['VXLAN', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the 802.1X in Wi-Fi?', 'options': ['Encrypt data', 'Port-based authentication', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which security tool blocks ransomware?', 'options': ['Firewall', 'IDS', 'Anti-ransomware', 'NAT'], 'correct': 2},
+{'q': 'What is the primary function of a SASE platform?', 'options': ['Route packets', 'Converge networking/security', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+{'q': 'Which protocol is used for network analytics?', 'options': ['sFlow', 'FTP', 'HTTP', 'SMTP'], 'correct': 0},
+{'q': 'What is the purpose of the WPA3 in Wi-Fi?', 'options': ['Encrypt data', 'Enhance security', 'Assign IPs', 'Resolve DNS'], 'correct': 1},
+   ];
+
+    const container = document.getElementById('questionsContainer');
+
+    questions.forEach((q, i) => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `<strong>Q${i + 1}:</strong> ${q.q}<br><div class="options">` +
+        q.options.map((opt, idx) => `<button type="button" onclick="selectOption(${i}, ${idx}, this)">${opt}</button>`).join('') +
+        `</div>`;
+      container.appendChild(div);
+    });
+
+    const userAnswers = Array(questions.length).fill(null);
+    const answered = Array(questions.length).fill(false);
+
+    function selectOption(qIndex, optIndex, btn) {
+      if (answered[qIndex]) return; // prevent changing after answering
+
+      const buttons = btn.parentNode.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+
+      const correctIdx = questions[qIndex].correct;
+
+      if (optIndex === correctIdx) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIdx].classList.add('correct');
+      }
+
+      userAnswers[qIndex] = optIndex;
+      answered[qIndex] = true;
+    }
+
+    function submitAnswers() {
+      let correct = 0;
+      let resultText = '';
+      questions.forEach((q, i) => {
+        if (userAnswers[i] === q.correct) correct++;
+        else resultText += `Q${i+1}: Your answer: ${q.options[userAnswers[i]] || 'None'} | Correct: ${q.options[q.correct]}\n`;
+      });
+      alert(`Score: ${correct}/${questions.length}\n\nReview:\n` + resultText);
+    }
+  </script>
+</body>
+</html>
