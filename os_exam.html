@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operating System - 100 MCQs</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .question { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+    .options button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+    .options button.selected {
+      background-color: #cce5ff;
+    }
+    .options button.correct {
+      background-color: #28a745;
+      color: white;
+    }
+    .options button.incorrect {
+      background-color: #dc3545;
+      color: white;
+    }
+    .submit-btn {
+      margin-top: 30px;
+      padding: 15px 25px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Operating System - 100 MCQs</h1>
+  <form id="quizForm">
+    <div id="questionsContainer"></div>
+    <button type="button" class="submit-btn" onclick="submitAnswers()">Submit Answers</button>
+  </form>
+
+  <script>
+    const questions = [
+   {'q': 'What is the primary role of an operating system?', 'options': ['To execute application programs', 'To act as an intermediary between hardware and software', 'To manage database systems', 'To design user interfaces'], 'correct': 1},
+{'q': 'Which component of the Von Neumann architecture holds the next instruction to be executed?', 'options': ['Memory Address Register (MAR)', 'Program Counter (PC)', 'Accumulator (AC)', 'Current Instruction Register (CIR)'], 'correct': 1},
+{'q': 'What is the function of the Memory Data Register (MDR)?', 'options': ['Stores the address of data in memory', 'Holds data being transferred to/from memory', 'Manages arithmetic operations', 'Tracks process states'], 'correct': 1},
+{'q': 'Which bus carries control signals between the CPU and other components?', 'options': ['Data Bus', 'Address Bus', 'Control Bus', 'System Bus'], 'correct': 2},
+{'q': 'What is the purpose of RAM in a computer system?', 'options': ['Permanent storage', 'Temporary fast-access storage for CPU', 'Storing BIOS', 'Managing I/O devices'], 'correct': 1},
+{'q': 'Which device is NOT typically an input device?', 'options': ['Keyboard', 'Monitor', 'Scanner', 'Microphone'], 'correct': 1},
+{'q': 'What distinguishes block devices from character devices?', 'options': ['Block devices transfer data in chunks', 'Character devices use DMA', 'Block devices are slower', 'Character devices are non-volatile'], 'correct': 0},
+{'q': 'Which I/O protocol maps device communication to memory addresses?', 'options': ['Special Instruction I/O', 'Memory-Mapped I/O (MMIO)', 'Direct Memory Access (DMA)', 'Polling'], 'correct': 1},
+{'q': 'What is the role of the DMA controller?', 'options': ['To execute CPU instructions', 'To manage interrupts', 'To transfer data without CPU intervention', 'To schedule processes'], 'correct': 2},
+{'q': 'Which mechanism does the OS use to handle device interrupts efficiently?', 'options': ['Polling', 'Interrupt Vector Table', 'Semaphores', 'Deadlock detection'], 'correct': 1},
+{'q': 'What is a bootstrap in the context of OS startup?', 'options': ['A memory management technique', 'Initial code executed from ROM', 'A scheduling algorithm', 'A type of filesystem'], 'correct': 1},
+{'q': 'Which of these is NOT an OS kernel objective?', 'options': ['Efficiency', 'Ease of usability', 'Hardware abstraction', 'Direct user application development'], 'correct': 3},
+{'q': 'What is the kernel?', 'options': ['A user interface tool', 'The core low-level OS component', 'A filesystem manager', 'An I/O device driver'], 'correct': 1},
+{'q': 'Which OS category is designed for fine-grained time precision?', 'options': ['Batch OS', 'Real-Time OS', 'Time-Sharing OS', 'Network OS'], 'correct': 1},
+{'q': 'What characterizes a monolithic kernel?', 'options': ['Modular design', 'All functionalities run in kernel space', 'Microservices architecture', 'User-mode drivers'], 'correct': 1},
+{'q': 'Why is an OS needed for multiprocessor systems?', 'options': ['To increase CPU clock speed', 'To manage scheduling across cores', 'To replace hardware controllers', 'To reduce RAM usage'], 'correct': 1},
+{'q': 'What is a process in OS terminology?', 'options': ['A hardware component', 'A program in execution', 'A memory address', 'A filesystem partition'], 'correct': 1},
+{'q': 'Which section of a process contains global variables?', 'options': ['Text Section', 'Stack Section', 'Data Section', 'Heap Section'], 'correct': 2},
+{'q': 'What state is a process in when waiting for an I/O event?', 'options': ['Ready', 'Running', 'Waiting', 'Terminated'], 'correct': 2},
+{'q': 'What does PCB stand for?', 'options': ['Process Control Block', 'Program Counter Buffer', 'Processor Cache Bus', 'Parallel Computing Base'], 'correct': 0},
+{'q': 'Which PCB field holds the next instruction address?', 'options': ['Process State', 'Program Counter', 'Memory Limits', 'I/O Status'], 'correct': 1},
+{'q': 'What happens during a context switch?', 'options': ['CPU changes cores', 'Process state is saved/restored', 'Memory is deallocated', 'I/O devices are reset'], 'correct': 1},
+{'q': 'Which queue holds processes waiting for CPU time?', 'options': ['Job Queue', 'Ready Queue', 'Waiting Queue', 'Device Queue'], 'correct': 1},
+{'q': 'What scheduling metric measures time spent in queues?', 'options': ['CPU Utilization', 'Throughput', 'Turnaround Time', 'Waiting Time'], 'correct': 3},
+{'q': 'What is a thread?', 'options': ['A hardware interrupt', 'A lightweight process', 'A memory bus protocol', 'A filesystem attribute'], 'correct': 1},
+{'q': 'Which memory management unit translates logical to physical addresses?', 'options': ['ALU', 'MMU', 'DMA', 'CU'], 'correct': 1},
+{'q': 'What problem does address binding solve?', 'options': ['Deadlock prevention', 'Variable address changes during execution', 'CPU overheating', 'Filesystem fragmentation'], 'correct': 1},
+{'q': 'Which IPC method uses a shared memory buffer?', 'options': ['Message Passing', 'Pipes', 'Sockets', 'Shared Memory'], 'correct': 3},
+{'q': 'What is a critical section?', 'options': ['A ROM segment', 'Code accessing shared resources', 'CPU cache area', 'Kernel boot sequence'], 'correct': 1},
+{'q': 'Which synchronization primitive uses a binary 0/1 state?', 'options': ['Mutex', 'Semaphore', 'Deadlock', 'Polling'], 'correct': 0},
+{'q': 'What causes a deadlock?', 'options': ['High CPU usage', 'Circular wait condition', 'Excessive threading', 'MMU failure'], 'correct': 1},
+{'q': 'Which filesystem component manages disk hardware?', 'options': ['Directory Service', 'Storage Service', 'Access Control', 'Virtual Memory'], 'correct': 1},
+{'q': 'What is a file control block?', 'options': ['A CPU register', 'Metadata about a file', 'A type of mutex', 'A network protocol'], 'correct': 1},
+{'q': 'Which directory structure is hierarchical?', 'options': ['Flat Namespace', 'Graph Namespace', 'Tree Namespace', 'Linear Namespace'], 'correct': 2},
+{'q': 'What prevents file deletion during use?', 'options': ['Garbage Collection', 'Concurrency Control', 'DMA', 'Interrupt Masking'], 'correct': 1},
+{'q': 'Which OS mode has highest privileges?', 'options': ['User Mode', 'Kernel Mode', 'Safe Mode', 'Virtual Mode'], 'correct': 1},
+{'q': 'What is Ring 0 in OS protection rings?', 'options': ['User applications', 'Kernel operations', 'I/O drivers', 'Networking stack'], 'correct': 1},
+{'q': 'What does a hypervisor manage?', 'options': ['File systems', 'Virtual machines', 'CPU registers', 'Power supply'], 'correct': 1},
+{'q': 'Which is NOT a virtualization benefit?', 'options': ['Hardware emulation', 'Legacy system support', 'Reduced CPU speed', 'Easy migration'], 'correct': 2},
+{'q': 'What does ACL stand for in OS security?', 'options': ['Access Control List', 'Arithmetic Logic Core', 'Address Cache Line', 'Asynchronous Call Layer'], 'correct': 0},
+{'q': 'Which interface is text-based?', 'options': ['GUI', 'Shell', 'Touchscreen', 'Graphics Terminal'], 'correct': 1},
+{'q': 'What is SWEBOK V3.0 in this context?', 'options': ['A CPU architecture', 'A software engineering standard', 'A filesystem type', 'A programming language'], 'correct': 1},
+{'q': 'Which OS component abstracts hardware for applications?', 'options': ['System Calls', 'BIOS', 'Compiler', 'Cache'], 'correct': 0},
+{'q': 'What is the default input device?', 'options': ['Mouse', 'Scanner', 'Keyboard', 'Microphone'], 'correct': 2},
+{'q': 'Which register holds arithmetic results?', 'options': ['PC', 'MAR', 'AC', 'MDR'], 'correct': 2},
+{'q': 'What is the stored-program concept?', 'options': ['Instructions/data in separate memory', 'Instructions/data in same memory', 'ROM-only execution', 'Cacheless design'], 'correct': 1},
+{'q': 'Which is NOT a CPU subsystem?', 'options': ['ALU', 'CU', 'MMU', 'GPU'], 'correct': 3},
+{'q': 'What does BIOS stand for?', 'options': ['Binary Input Output System', 'Basic Integrated Operating System', 'Basic Input Output System', 'Boot Instruction Operation Set'], 'correct': 2},
+{'q': 'Which scheduling algorithm prioritizes shortest jobs?', 'options': ['FCFS', 'SJF', 'Round Robin', 'Priority'], 'correct': 1},
+{'q': 'What is throughput in scheduling?', 'options': ['CPU idle time', 'Number of completed processes per unit time', 'Queue wait time', 'Context switch speed'], 'correct': 1},
+{'q': 'Which process state follows "New"?', 'options': ['Running', 'Ready', 'Terminated', 'Waiting'], 'correct': 1},
+{'q': 'What is a zombie process?', 'options': ['A terminated process awaiting parent', 'A high-priority process', 'A deadlocked process', 'A virtualized process'], 'correct': 0},
+{'q': 'Which IPC method uses sockets?', 'options': ['Shared Memory', 'Message Passing', 'Semaphores', 'Mutexes'], 'correct': 1},
+{'q': 'What is thrashing?', 'options': ['Excessive context switching', 'High CPU utilization', 'Memory fragmentation', 'Deadlock resolution'], 'correct': 0},
+{'q': 'Which is a block device?', 'options': ['Keyboard', 'SSD', 'Mouse', 'Speaker'], 'correct': 1},
+{'q': 'What is spooling?', 'options': ['Parallel execution', 'Buffering output for slow devices', 'Memory swapping', 'Interrupt handling'], 'correct': 1},
+{'q': 'Which is a character device?', 'options': ['Hard Disk', 'USB Drive', 'Printer', 'Serial Port'], 'correct': 3},
+{'q': 'What does MMIO stand for?', 'options': ['Memory Mapped Input Output', 'Microcode Managed I/O', 'Multicast Memory I/O', 'Modular Memory Interface'], 'correct': 0},
+{'q': 'Which is NOT a deadlock condition?', 'options': ['Mutual Exclusion', 'Hold and Wait', 'No Preemption', 'Priority Inversion'], 'correct': 3},
+{'q': 'What is a semaphore?', 'options': ['A synchronization tool', 'A CPU register', 'A filesystem attribute', 'An I/O protocol'], 'correct': 0},
+{'q': 'Which filesystem organizes files in folders?', 'options': ['Flat', 'Hierarchical', 'Linear', 'Circular'], 'correct': 1},
+{'q': 'What is garbage collection?', 'options': ['Memory compaction', 'Deleting unused files', 'Process termination', 'Disk defragmentation'], 'correct': 1},
+{'q': 'Which OS handles real-time constraints?', 'options': ['Batch OS', 'RTOS', 'Time-Sharing OS', 'Distributed OS'], 'correct': 1},
+{'q': 'What is a GUI?', 'options': ['Graphical User Interface', 'General Utility Interface', 'Global Unified Interrupt', 'Generic User Instruction'], 'correct': 0},
+{'q': 'Which OS is microkernel-based?', 'options': ['Windows', 'Linux', 'macOS', 'QNX'], 'correct': 3},
+{'q': 'What is paging?', 'options': ['Memory partitioning', 'Process scheduling', 'I/O buffering', 'File fragmentation'], 'correct': 0},
+{'q': 'Which is NOT a process state?', 'options': ['New', 'Active', 'Waiting', 'Terminated'], 'correct': 1},
+{'q': 'What is cache memory?', 'options': ['Slow, large storage', 'Fast, small CPU-close storage', 'ROM extension', 'I/O buffer'], 'correct': 1},
+{'q': 'Which is a secondary storage device?', 'options': ['RAM', 'CPU Cache', 'Hard Drive', 'Registers'], 'correct': 2},
+{'q': 'What is fragmentation?', 'options': ['Memory wastage', 'Process duplication', 'CPU overheating', 'Network latency'], 'correct': 0},
+{'q': 'Which is a multi-user OS?', 'options': ['DOS', 'Windows Server', 'RTOS', 'Embedded OS'], 'correct': 1},
+{'q': 'What is a system call?', 'options': ['Hardware interrupt', 'API for OS services', 'CPU instruction set', 'Filesystem command'], 'correct': 1},
+{'q': 'Which is NOT a CPU scheduling algorithm?', 'options': ['FCFS', 'SJF', 'DMA', 'Round Robin'], 'correct': 2},
+{'q': 'What is virtualization?', 'options': ['Hardware emulation', 'Memory compression', 'Process isolation', 'File encryption'], 'correct': 0},
+{'q': 'Which OS component manages processes?', 'options': ['File System', 'Scheduler', 'Device Driver', 'Compiler'], 'correct': 1},
+{'q': 'What is a trap in OS terms?', 'options': ['A software interrupt', 'A deadlock', 'A memory leak', 'A filesystem error'], 'correct': 0},
+{'q': 'Which is a synchronous I/O example?', 'options': ['Network download', 'Keyboard input', 'Printer output', 'Disk write'], 'correct': 2},
+{'q': 'What is a race condition?', 'options': ['CPU overheating', 'Unpredictable output from concurrent access', 'Memory fragmentation', 'I/O device conflict'], 'correct': 1},
+{'q': 'Which is a kernel responsibility?', 'options': ['GUI rendering', 'Process scheduling', 'Application development', 'User authentication'], 'correct': 1},
+{'q': 'What is a shell?', 'options': ['Hardware casing', 'OS command-line interface', 'CPU packaging', 'Memory module'], 'correct': 1},
+{'q': 'Which protocol is used for network OS communication?', 'options': ['PCIe', 'I2C', 'IP', 'DMA'], 'correct': 2},
+{'q': 'What is a page fault?', 'options': ['Memory access error', 'Missing page in RAM', 'Filesystem corruption', 'CPU exception'], 'correct': 1},
+{'q': 'Which is NOT a memory management technique?', 'options': ['Paging', 'Segmentation', 'Thrashing', 'Buffering'], 'correct': 3},
+{'q': 'What is a daemon process?', 'options': ['A zombie process', 'A background service', 'A high-priority task', 'A virtual machine'], 'correct': 1},
+{'q': 'Which is a benefit of modular OS design?', 'options': ['Faster boot time', 'Independent component updates', 'Smaller kernel size', 'Lower hardware requirements'], 'correct': 1},
+{'q': 'What is the purpose of the Program Counter (PC)?', 'options': ['Store data', 'Hold next instruction address', 'Manage interrupts', 'Control I/O devices'], 'correct': 1},
+{'q': 'Which OS handles batch jobs?', 'options': ['Real-Time OS', 'Time-Sharing OS', 'Batch OS', 'Distributed OS'], 'correct': 2},
+{'q': 'What is a pipe in IPC?', 'options': ['Shared memory segment', 'Message queue', 'Unidirectional data channel', 'Synchronization primitive'], 'correct': 2},
+{'q': 'Which is NOT a CPU core type?', 'options': ['Homogeneous', 'Heterogeneous', 'Virtual', 'Parallel'], 'correct': 3},
+{'q': 'What is the role of the ALU?', 'options': ['Memory management', 'Arithmetic/logic operations', 'I/O control', 'Process scheduling'], 'correct': 1},
+{'q': 'Which is a disadvantage of polling?', 'options': ['High CPU usage', 'Slow response', 'Complex implementation', 'Deadlock risk'], 'correct': 0},
+{'q': 'What is a TLB?', 'options': ['Translation Lookaside Buffer', 'Thread Local Block', 'Task Load Balancer', 'Timer Loop Buffer'], 'correct': 0},
+{'q': 'Which OS is monolithic?', 'options': ['Windows', 'Linux', 'macOS', 'MINIX'], 'correct': 1},
+{'q': 'What is the purpose of the MAR?', 'options': ['Hold data', 'Store memory addresses', 'Manage interrupts', 'Control buses'], 'correct': 1},
+{'q': 'Which is a real-time OS example?', 'options': ['Windows 10', 'VxWorks', 'Ubuntu', 'macOS'], 'correct': 1},
+{'q': 'What is a mutex?', 'options': ['Memory unit', 'Synchronization lock', 'I/O protocol', 'Filesystem type'], 'correct': 1},
+{'q': 'Which is NOT a responsibility of the OS?', 'options': ['Memory management', 'Application development', 'I/O management', 'Process scheduling'], 'correct': 1},
+{'q': 'What is the purpose of the CIR?', 'options': ['Hold current instruction', 'Manage memory', 'Control buses', 'Schedule processes'], 'correct': 0},
+{'q': 'Which is a network OS?', 'options': ['Windows Server', 'Android', 'iOS', 'DOS'], 'correct': 0},
+{'q': 'What is a microkernel?', 'options': ['Minimal kernel with user-space services', 'Large monolithic kernel', 'Virtual machine manager', 'Filesystem driver'], 'correct': 0},
+{'q': 'Which is a distributed OS challenge?', 'options': ['Clock synchronization', 'High RAM usage', 'Slow CPU speed', 'Small storage'], 'correct': 0},
+{'q': 'What is the purpose of the ITI course in the document?', 'options': ['Teach programming', 'Cover OS foundational concepts', 'Design hardware', 'Develop applications'], 'correct': 1},
+{'q': 'Which OS component handles system calls?', 'options': ['Kernel', 'Shell', 'Compiler', 'BIOS'], 'correct': 0},
+{'q': 'What is the final state of a process?', 'options': ['Ready', 'Running', 'Terminated', 'Waiting'], 'correct': 2},
+{'q': 'Which is NOT a file attribute?', 'options': ['Name', 'Size', 'CPU usage', 'Permissions'], 'correct': 2},
+{'q': 'What is the role of the control unit (CU)?', 'options': ['Perform arithmetic', 'Coordinate hardware operations', 'Manage files', 'Handle interrupts'], 'correct': 1},
+{'q': 'Which is a time-sharing OS?', 'options': ['RTOS', 'UNIX', 'DOS', 'Embedded OS'], 'correct': 1},
+{'q': 'What is the purpose of the document\'s Lesson 6?', 'options': ['Memory Management', 'Access and Protection', 'File Systems', 'I/O Management'], 'correct': 1},
+{'q': 'Which is a GUI example?', 'options': ['Bash', 'Windows Desktop', 'Command Prompt', 'PowerShell'], 'correct': 1},
+{'q': 'What is the primary goal of OS security?', 'options': ['Speed', 'Resource protection', 'Hardware cost reduction', 'User convenience'], 'correct': 1},
+{'q': 'Which is NOT a process scheduling queue?', 'options': ['Ready Queue', 'Job Queue', 'Termination Queue', 'Device Queue'], 'correct': 2},
+{'q': 'What is the purpose of the document\'s "References" section?', 'options': ['List exam questions', 'Cite source material', 'Provide code examples', 'Define glossary terms'], 'correct': 1},
+{'q': 'Which is a function of the OS shell?', 'options': ['Manage CPU registers', 'Provide user command interface', 'Handle interrupts', 'Allocate memory'], 'correct': 1},
+{'q': 'What is the significance of SWEBOK V3.0 in the document?', 'options': ['Hardware standard', 'Software engineering body of knowledge', 'Programming language', 'Filesystem type'], 'correct': 1},
+{'q': 'Which is NOT an OS evaluation criterion mentioned?', 'options': ['Comprehensive exam', 'Duration', 'Programming assignments', 'Conceptual understanding'], 'correct': 2},
+{'q': 'What is the role of the "bootstrap" in OS startup?', 'options': ['Load the kernel', 'Manage processes', 'Handle interrupts', 'Allocate memory'], 'correct': 0},
+{'q': 'Which lesson covers "Processes and Scheduling"?', 'options': ['Lesson 1', 'Lesson 2', 'Lesson 3', 'Lesson 4'], 'correct': 1},
+{'q': 'What is the purpose of the "Thank You" slide?', 'options': ['List references', 'Acknowledge contributors', 'Provide exam tips', 'Summarize content'], 'correct': 1},
+{'q': 'Which is a key topic in Lesson 5?', 'options': ['File Systems', 'Memory Management', 'I/O Devices', 'Virtualization'], 'correct': 0},
+{'q': 'What is the document\'s copyright year?', 'options': ['2021', '2022', '2023', '2024'], 'correct': 1},
+{'q': 'Which author prepared the OS course content?', 'options': ['Paul Crutcher', 'Ahmed Loutfy', 'Neeraj Singh', 'Peter Tiegs'], 'correct': 1},
+{'q': 'What is the total duration of the OS course?', 'options': ['4 hours', '6 hours', '8 hours', '10 hours'], 'correct': 1},
+{'q': 'Which lesson introduces "Von Neumann Architecture"?', 'options': ['Lesson 1', 'Lesson 2', 'Lesson 3', 'Lesson 4'], 'correct': 0},
+{'q': 'What is the document version number?', 'options': ['1.0', '1.1', '2.0', '3.0'], 'correct': 1},
+{'q': 'Which institution reserved the document\'s copyright?', 'options': ['MIT', 'ITI', 'IEEE', 'Apress'], 'correct': 1},
+   
+   ];
+
+    const container = document.getElementById('questionsContainer');
+
+    questions.forEach((q, i) => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `<strong>Q${i + 1}:</strong> ${q.q}<br><div class="options">` +
+        q.options.map((opt, idx) => `<button type="button" onclick="selectOption(${i}, ${idx}, this)">${opt}</button>`).join('') +
+        `</div>`;
+      container.appendChild(div);
+    });
+
+    const userAnswers = Array(questions.length).fill(null);
+    const answered = Array(questions.length).fill(false);
+
+    function selectOption(qIndex, optIndex, btn) {
+      if (answered[qIndex]) return; // prevent changing after answering
+
+      const buttons = btn.parentNode.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+
+      const correctIdx = questions[qIndex].correct;
+
+      if (optIndex === correctIdx) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIdx].classList.add('correct');
+      }
+
+      userAnswers[qIndex] = optIndex;
+      answered[qIndex] = true;
+    }
+
+    function submitAnswers() {
+      let correct = 0;
+      let resultText = '';
+      questions.forEach((q, i) => {
+        if (userAnswers[i] === q.correct) correct++;
+        else resultText += `Q${i+1}: Your answer: ${q.options[userAnswers[i]] || 'None'} | Correct: ${q.options[q.correct]}\n`;
+      });
+      alert(`Score: ${correct}/${questions.length}\n\nReview:\n` + resultText);
+    }
+  </script>
+</body>
+</html>
